@@ -11,6 +11,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
+import com.example.littlelemon2.navigation.Home
+import com.example.littlelemon2.navigation.Onboarding
+import com.example.littlelemon2.navigation.Navigation
 import com.example.littlelemon2.ui.theme.LittleLemon2Theme
 
 class MainActivity : ComponentActivity() {
@@ -19,29 +23,15 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             LittleLemon2Theme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                Scaffold(modifier = Modifier.fillMaxSize()) { padding ->
+                    val sharedPreferences = getSharedPreferences(SharedPrefsKeys.SHARED_PREFS_NAME, MODE_PRIVATE)
+                    val isRegistered = sharedPreferences.getBoolean(SharedPrefsKeys.IS_REGISTERED, false)
+
+                    val navController = rememberNavController()
+                    Navigation(navController, if (isRegistered) Home.route else Onboarding.route)
                 }
             }
         }
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    LittleLemon2Theme {
-        Greeting("Android")
-    }
-}
