@@ -3,6 +3,7 @@ package com.example.littlelemon2.screens
 import android.app.Activity.MODE_PRIVATE
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -30,13 +31,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.littlelemon2.R
 import com.example.littlelemon2.navigation.Onboarding
 import com.example.littlelemon2.SharedPrefsKeys
+import com.example.littlelemon2.navigation.Home
 import com.example.littlelemon2.ui.theme.Highlight1
 import com.example.littlelemon2.ui.theme.Markazi
 import com.example.littlelemon2.ui.theme.Primary2
@@ -46,8 +47,8 @@ fun Profile(navController: NavHostController) {
     val context = LocalContext.current
     val sharedPreferences = context.getSharedPreferences(SharedPrefsKeys.SHARED_PREFS_NAME, MODE_PRIVATE)
     var firstName = sharedPreferences.getString(SharedPrefsKeys.FIRST_NAME, "") ?: ""
-    var lastName = sharedPreferences.getString(SharedPrefsKeys.FIRST_NAME, "") ?: ""
-    var email = sharedPreferences.getString(SharedPrefsKeys.FIRST_NAME, "") ?: ""
+    var lastName = sharedPreferences.getString(SharedPrefsKeys.LAST_NAME, "") ?: ""
+    var email = sharedPreferences.getString(SharedPrefsKeys.EMAIL, "") ?: ""
 
     val focusRequesters = List(3) { FocusRequester() }
     val registerButtonFocusRequester = FocusRequester()
@@ -63,7 +64,10 @@ fun Profile(navController: NavHostController) {
                 painter = painterResource(id = R.drawable.logo),
                 contentDescription = "Little Lemon Logo",
                 modifier = Modifier
-                    .size(width = 200.dp, height = 50.dp),
+                    .size(width = 200.dp, height = 50.dp)
+                    .clickable {
+                        navController.navigate(Home.route)
+                    },
                 contentScale = ContentScale.FillBounds
             )
         }
