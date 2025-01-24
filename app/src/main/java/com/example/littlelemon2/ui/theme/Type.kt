@@ -36,7 +36,7 @@ val Typography = Typography(
 )
 
 val Markazi = FontFamily(
-    Font(R.font.markazi_text_regular, FontWeight.Bold),
+    Font(R.font.markazi_text_regular, FontWeight.Bold)
 )
 
 val Karla = FontFamily(
